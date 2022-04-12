@@ -1,0 +1,68 @@
+
+section .data
+minus db '-'
+
+section .bss
+a resb 2
+b resb 2
+c resb 1
+
+section .text
+global _start
+
+print:
+cmp edi, 0
+jge afis
+mov eax,4
+mov ebx,1
+mov ecx,minus
+mov edx,1
+int 0x80
+neg edi
+
+
+
+
+
+afis:
+mov eax,edi
+add eax,'0'
+mov [c], al
+mov eax, 4
+mov ebx, 1
+mov ecx, c
+mov edx, 1
+int 0x80
+ret
+
+
+
+  
+
+
+
+_start:
+    mov eax, 3
+    mov ebx, 0
+    mov ecx, a
+    mov edx, 2
+    int 0x80
+
+    mov eax, 3
+    mov ebx, 0
+    mov ecx, b
+    mov edx, 2
+    int 0x80
+
+  mov eax,0
+    mov al, [a]
+    sub al, [b]
+    cbw
+    cwde 
+ mov edi,eax
+ 
+
+ 
+    call print
+  mov eax,1
+  int 0x80
